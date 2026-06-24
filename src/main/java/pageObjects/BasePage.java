@@ -1,6 +1,7 @@
 package pageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,12 +21,21 @@ public class BasePage {
         // Настраиваем её один раз на 5 секунд
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
+    // скролл
+    protected void scrollToElement(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+    }
     //метод ждет появления элемента на экране и возвращает его
     protected WebElement waitForElement(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
-    //метод ждет, когда кнопка станет кликабельной
+    //метод ждет, когда кнопка станет кликабельной (принимает локатор)
     protected WebElement waitForClick(By locator) {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+    //метод ждет, когда кнопка станет кликабельной (принимает уже найденный элемент)
+    protected WebElement waitForClick(WebElement element) {
+        return new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.elementToBeClickable(element));
     }
 }
