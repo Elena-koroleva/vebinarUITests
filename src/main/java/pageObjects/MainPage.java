@@ -3,6 +3,7 @@ package pageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class MainPage extends BasePage {
 
@@ -16,6 +17,9 @@ public class MainPage extends BasePage {
     private final By lowerOrderButton = By.xpath("//div[contains(@class, 'Home_FinishButton')]/button[text()='Заказать']");
     //локатор для кук
     private final By cookieButton = By.id("rcc-confirm-button");
+    //динамические локаторы для вопросов и ответов
+    private final String questionTemplateId = "accordion__heading-%d";
+    private final String answerTemplateId = "accordion__panel-%d";
     //конструктор
     public MainPage(WebDriver driver) {
         super(driver); // Передали драйвер наверх, там создался наш wait
@@ -54,5 +58,16 @@ public class MainPage extends BasePage {
         scrollToElement(element);
         waitForClick(element).click();
         return new OrderCustomerPage(driver);
+    }
+    //метод нажимает по вопросу
+    public void clickQuestion(int index) {
+        By questionLocator = By.id(String.format(questionTemplateId, index)); //готовим локатор
+        scrollToElement(driver.findElement(questionLocator)); //находим элемент и скроллим
+        waitForClick(questionLocator).click();
+    }
+    //метод получает текст ответа и отдает его
+    public String getAnswerText(int index) {
+        By answerLocator = By.id(String.format(answerTemplateId, index)); //готовим локатор
+        return waitForElement(answerLocator).getText(); //ждем элемент и берем его текст
     }
 }

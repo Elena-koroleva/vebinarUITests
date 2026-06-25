@@ -51,7 +51,7 @@ public class OrderScooterTests {
         };
 
     }
-    @Test
+    @Test //позитивный тест на "Заказ самоката" с 2 точками входа - верхняя и нижняя кнопка Заказать
     public void scooterOrderFlowTest() {
         WebDriver driver = factoryDriver.getDriver();
         MainPage mainPage = new MainPage(driver);
