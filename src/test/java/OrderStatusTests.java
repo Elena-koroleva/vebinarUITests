@@ -5,7 +5,7 @@ import pageObjects.MainPage;
 import pageObjects.OrderStatusPage;
 import static org.junit.Assert.assertTrue;
 
-public class ScooterTests {
+public class OrderStatusTests {
 
     @Rule //правило для управления браузером
     public FactoryDriver factoryDriver = new FactoryDriver();
