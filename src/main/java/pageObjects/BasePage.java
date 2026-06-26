@@ -14,6 +14,8 @@ public class BasePage {
     public static final String MAIN_PAGE_URL = "https://qa-scooter.praktikum-services.ru/";
     //локатор логотипа Самокат
     private final By logoScooter = By.className("Header_LogoScooter__3lsAR");
+    //локатор логотипа Яндекс
+    private final By logoYandex = By.className("Header_LogoYandex__3TSOI");
 
     protected WebDriver driver;
     // Создаем одну переменную ожидания на весь проект
@@ -32,6 +34,30 @@ public class BasePage {
     public MainPage  clickLogoScooter(){
         waitForClick(logoScooter).click();
         return new MainPage(driver); // Возвращаем объект страницы, на которую перешли
+    }
+    // метод клика по логотипу Яндекс
+    public void clickLogoYandexAndSwitchToTab() {
+        String originalWindow = driver.getWindowHandle(); //Запоминаем текущую вкладку
+        waitForClick(logoYandex).click(); //Кликаем по логотипу Яндекса
+        waitForNewTabToOpen();
+        switchToNewTab(originalWindow);
+    }
+    //метод ждёт появление второй вкладки
+    private void waitForNewTabToOpen() {
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+    }
+    //метод переключения фокуса на вторую вкладку
+    private void switchToNewTab(String originalWindow) {
+        for (String windowHandle : driver.getWindowHandles()) {
+            if (!originalWindow.contentEquals(windowHandle)) {
+                driver.switchTo().window(windowHandle);
+                break;
+            }
+        }
+    }
+    // Ожидание загрузки Дзена
+    public void waitForDzenPageToLoad() {
+        wait.until(ExpectedConditions.urlContains("dzen.ru"));
     }
     //метод ждет появления элемента на экране и возвращает его
     protected WebElement waitForElement(By locator) {
