@@ -12,6 +12,9 @@ import java.time.Duration;
 public class BasePage {
 
     public static final String MAIN_PAGE_URL = "https://qa-scooter.praktikum-services.ru/";
+    //локатор логотипа Самокат
+    private final By logoScooter = By.className("Header_LogoScooter__3lsAR");
+
     protected WebDriver driver;
     // Создаем одну переменную ожидания на весь проект
     protected WebDriverWait wait;
@@ -24,6 +27,11 @@ public class BasePage {
     // скролл
     protected void scrollToElement(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+    }
+    //метод клика по логотипу Самокат
+    public MainPage  clickLogoScooter(){
+        waitForClick(logoScooter).click();
+        return new MainPage(driver); // Возвращаем объект страницы, на которую перешли
     }
     //метод ждет появления элемента на экране и возвращает его
     protected WebElement waitForElement(By locator) {

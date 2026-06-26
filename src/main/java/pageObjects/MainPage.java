@@ -70,4 +70,8 @@ public class MainPage extends BasePage {
         By answerLocator = By.id(String.format(answerTemplateId, index)); //готовим локатор
         return waitForElement(answerLocator).getText(); //ждем элемент и берем его текст
     }
+    // Метод для ожидания загрузки главной страницы
+    public void waitForMainPageToLoad() {
+        wait.until(ExpectedConditions.urlToBe(MAIN_PAGE_URL));
+    }
 }
